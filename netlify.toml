@@ -1,0 +1,35 @@
+[build]
+  command = "npm install && npm run build"
+  publish = "dist"
+  functions = "api"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+[build.processing]
+  skip_processing = false
+  css = { bundle = true, minify = true }
+  js = { bundle = true, minify = true }
+  html = { pretty_urls = true }
+  images = { compress = true }
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[functions]
+  external_node_modules = [
+    "express",
+    "cors",
+    "dotenv",
+    "twilio",
+    "@google/generative-ai",
+    "@huggingface/inference"
+  ]
+  node_bundler = "esbuild" 
